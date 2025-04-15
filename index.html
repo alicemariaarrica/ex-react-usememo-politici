@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
@@ -11,30 +11,58 @@
 </head>
 
 <body>
-    //elemento dove montare il "portale" che collega React a questa pagina Html
+
+    <!-- elemento dove montare il "portale" che collega React a questa pagina Html -->
     <div id="root"></div>
-    //dove scrivo il codice React:
+
+    <!-- dove scrivo il codice React -->
     <script type="text/babel">
-        // Qui dentro c'è il codice React:
-</body >
-        //estraggo due hook fondamentali da React 
+        // estraggo due hook fondamentali da React 
         const { useState, useEffect } = React;
 
-        // Questa è una funzione componente di React chiamata ListaPolitici.
+        // Creo la funzione componente di React chiamata ListaPolitici.
         // Al suo interno, viene usato l'hook useState per creare una variabile di stato
         // chiamata 'politicians', che inizialmente è un array vuoto.
-        //
-        // Insieme a 'politicians', React fornisce anche una funzione per aggiornare quello stato,
+        // React fornisce anche una funzione per aggiornare il valore dentro politicians
         // chiamata 'setPoliticians'.
-        //
         // Questa funzione viene usata (es. dopo una chiamata API) per inserire i dati reali dei politici
         // dentro 'politicians', in modo che il componente si aggiorni e li mostri a schermo.
-
         function ListaPolitici() {
             const [politicians, setPoliticians] = useState([]);
 
-    </script>
+            // Creo il blocco useEffect che contiene una funzione che fa una richiesta HTTP (chiamata API)
+            // per ottenere i dati dei politici dal server.
+            // I dati ricevuti vengono salvati nello stato del componente ListaPolitici tramite setPoliticians.
+            // Questa funzione si esegue automaticamente una sola volta,
+            // appena il componente viene montato (cioè quando React lo mostra per la prima volta nella pagina).
+            useEffect(() => {
+                fetch("https://boolean-spec-frontend.vercel.app/freetestapi/politicians")
+                    .then(res => res.json())
+                    .then(data => setPoliticians(data)) // i dati arrivati vengono salvati qui dentro
+                    .catch(err => console.error("Errore nel fetch:", err));
+            }, []);
 
+            // Ora mostro a schermo i dati salvati dentro politicians
+            return (
+                <div>
+                    <h1>Lista dei Politici</h1>
+                    {politicians.map(politico => (
+                        <div key={politico.id}>
+                            <img src={politico.image} alt={politico.name} width="200" />
+                            <h2>{politico.name}</h2>
+                            <h4>{politico.position}</h4>
+                            <p>{politico.biography}</p>
+                            <hr />
+                        </div>
+                    ))}
+                </div>
+            );
+        }
+
+        // Dico a React di montare il componente ListaPolitici dentro il div con id="root"
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<ListaPolitici />);
+    </script>
 
 </body>
 

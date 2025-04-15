@@ -24,3 +24,17 @@ Posizione (position)
 Breve biografia (biography)
 
 Obiettivo: Caricare e mostrare i politici in un’interfaccia chiara e leggibile.
+
+
+Effettua una chiamata API a
+https://boolean-spec-frontend.vercel.app/freetestapi/politicians
+Salva la risposta nello stato (useState).
+Mostra i politici in una lista di card, visualizzando:
+
+✅ Nome (name)
+
+✅ Immagine (image)
+
+✅ Posizione (position)
+
+✅ Breve biografia (biography)
