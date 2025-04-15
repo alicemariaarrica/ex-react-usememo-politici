@@ -15,7 +15,24 @@
     <div id="root"></div>
     //dove scrivo il codice React:
     <script type="text/babel">
-        // Qui scriverai il codice React
+        // Qui dentro c'è il codice React:
+</body >
+        //estraggo due hook fondamentali da React 
+        const { useState, useEffect } = React;
+
+        // Questa è una funzione componente di React chiamata ListaPolitici.
+        // Al suo interno, viene usato l'hook useState per creare una variabile di stato
+        // chiamata 'politicians', che inizialmente è un array vuoto.
+        //
+        // Insieme a 'politicians', React fornisce anche una funzione per aggiornare quello stato,
+        // chiamata 'setPoliticians'.
+        //
+        // Questa funzione viene usata (es. dopo una chiamata API) per inserire i dati reali dei politici
+        // dentro 'politicians', in modo che il componente si aggiorni e li mostri a schermo.
+
+        function ListaPolitici() {
+            const [politicians, setPoliticians] = useState([]);
+
     </script>
 
 
