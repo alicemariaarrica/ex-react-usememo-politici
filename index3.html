@@ -2,13 +2,73 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista Politici</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 </head>
 
 <body>
+    <div id="root"></div>
 
+    <script type="text/babel">
+        const { useState, useEffect, useMemo } = React;
+
+        // ✅ Componente ottimizzato con React.memo
+        const Card = React.memo(function Card({ politico }) {
+            console.log("🔁 Rendering:", politico.name);
+            return (
+                <div>
+                    <img src={politico.image} alt={politico.name} width="200" />
+                    <h2>{politico.name}</h2>
+                    <h4>{politico.position}</h4>
+                    <p>{politico.biography}</p>
+                    <hr />
+                </div>
+            );
+        });
+
+        function ListaPolitici() {
+            const [politicians, setPoliticians] = useState([]);
+            const [searchTerm, setSearchTerm] = useState("");
+
+            useEffect(() => {
+                fetch("https://boolean-spec-frontend.vercel.app/freetestapi/politicians")
+                    .then(res => res.json())
+                    .then(data => setPoliticians(data))
+                    .catch(err => console.error("Errore nel fetch:", err));
+            }, []);
+
+            const filteredPoliticians = useMemo(() => {
+                return politicians.filter(politico =>
+                    politico.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    politico.biography.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }, [politicians, searchTerm]);
+
+            return (
+                <div>
+                    <h1>Lista dei Politici</h1>
+
+                    <input
+                        type="text"
+                        placeholder="Cerca per nome o biografia"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+
+                    {filteredPoliticians.map(politico => (
+                        <Card key={politico.id} politico={politico} />
+                    ))}
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<ListaPolitici />);
+    </script>
 </body>
 
 </html>
