@@ -4,3 +4,20 @@ Permetti all’utente di filtrare i risultati in base a nome o biografia (se il 
 ❌ Non usare useEffect per aggiornare l’array filtrato.
 
 Obiettivo: Migliorare le prestazioni evitando ricalcoli inutili quando il valore della ricerca non cambia. 
+
+
+🧠 Obiettivo della Milestone 2
+Permettere all’utente di cercare politici per nome o biografia, in modo ottimizzato, senza ricalcoli inutili.
+
+
+
+📌 Traccia Milestone 2: Implementare la ricerca ottimizzata
+Obiettivo:
+✅ Aggiungere un campo di ricerca (input)
+
+✅ L’utente può cercare un politico per nome o biografia
+
+✅ La ricerca deve essere ottimizzata: si ricalcola solo se cambia la lista o il testo cercato
+
+❌ Non devi usare useEffect per filtrare (va fatto con useMemo)
+

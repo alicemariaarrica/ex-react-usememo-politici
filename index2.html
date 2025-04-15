@@ -4,24 +4,28 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Lista Politici</title>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 </head>
 
 <body>
-
+    <!-- Div dove montare React -->
     <div id="root"></div>
 
-
+    <!-- Codice React -->
     <script type="text/babel">
-
-        const { useState, useEffect } = React;
+        const { useState, useEffect, useMemo } = React;
 
         function ListaPolitici() {
+            // Stato per la lista dei politici
             const [politicians, setPoliticians] = useState([]);
 
+            // Stato per il testo cercato dall'utente
+            const [searchTerm, setSearchTerm] = useState("");
+
+            // Chiamata API al caricamento del componente
             useEffect(() => {
                 fetch("https://boolean-spec-frontend.vercel.app/freetestapi/politicians")
                     .then(res => res.json())
@@ -29,11 +33,28 @@
                     .catch(err => console.error("Errore nel fetch:", err));
             }, []);
 
+            // Lista filtrata con useMemo (ottimizzazione)
+            const filteredPoliticians = useMemo(() => {
+                return politicians.filter(politico =>
+                    politico.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    politico.biography.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }, [politicians, searchTerm]);
 
             return (
                 <div>
                     <h1>Lista dei Politici</h1>
-                    {politicians.map(politico => (
+
+                    {/* Campo input per la ricerca */}
+                    <input
+                        type="text"
+                        placeholder="Cerca per nome o biografia"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+
+                    {/* Lista dei politici filtrati */}
+                    {filteredPoliticians.map(politico => (
                         <div key={politico.id}>
                             <img src={politico.image} alt={politico.name} width="200" />
                             <h2>{politico.name}</h2>
@@ -46,10 +67,10 @@
             );
         }
 
+        // Montaggio del componente React
         const root = ReactDOM.createRoot(document.getElementById("root"));
         root.render(<ListaPolitici />);
     </script>
-
 </body>
 
 </html>
