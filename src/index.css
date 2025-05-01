@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+  user-select: none;
+}
+
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 15
+}
+
+
+input,
+button {
+  font-size: inherit;
+}
+
+img {
+  max-width: 10%;
+}
+
+input[type="number"] {
+  width: 50px
+}
+
+.Card {
+  background-color: cadetblue;
+  padding: 0;
+  border-radius: 10px;
+  margin: 1em 0;
+}

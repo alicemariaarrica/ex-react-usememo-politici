@@ -1,0 +1,67 @@
+👇 Ecco la parte importante del tuo codice:
+jsx
+Copia
+Modifica
+{Ps.map(P => (
+  <div className="Card" key={P.id}>
+    <img src={P.image} alt={P.name} />
+    <h1>{P.name}</h1>
+    <h2>{P.affiliation}</h2>
+    <p>{P.race}</p>
+  </div>
+))}
+🔍 Cosa succede qui?
+1. Ps.map(P => ( ... ))
+Ps è un array di oggetti, uno per ogni personaggio.
+
+.map() serve a trasformare ogni oggetto in un blocco di HTML (JSX).
+
+P è il singolo oggetto del personaggio, ad ogni giro del ciclo.
+
+Esempio:
+
+js
+Copia
+Modifica
+P = {
+  id: 1,
+  name: "Goku",
+  image: "https://...",
+  affiliation: "Z Fighters",
+  race: "Saiyan"
+}
+2. {} in JSX
+Le graffe {} servono per dire:
+
+“Qui dentro c'è JavaScript che voglio eseguire o stampare.”
+
+Quindi:
+
+{Ps.map(...)} = "esegui .map() su Ps e inserisci il risultato nel JSX"
+
+{P.name} = "scrivi il valore della proprietà name dentro il tag <h1>"
+
+3. JSX che genera le Card
+Ogni P diventa una card visuale come questa:
+
+html
+Copia
+Modifica
+<div class="Card" key="1">
+  <img src="https://..." alt="Goku" />
+  <h1>Goku</h1>
+  <h2>Z Fighters</h2>
+  <p>Saiyan</p>
+</div>
+E React fa questo per ogni oggetto in Ps.
+
+🧠 Riassunto logica:
+Hai un array (Ps) → contiene oggetti (P).
+
+Usi .map(P => (...)) → per ogni P, ritorni un blocco di JSX.
+
+React raccoglie tutti questi blocchi e li inserisce nel DOM.
+
+Usi le {} per scrivere codice JS dentro il JSX (per stampare, calcolare, ecc.).
+
+La key={P.id} aiuta React a tenere traccia di ogni card.
